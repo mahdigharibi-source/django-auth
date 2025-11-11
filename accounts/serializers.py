@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -12,6 +13,7 @@ class RegisterSerializer(serializers.Serializer):
         user = User.objects.create_user(**validated_data)
         user.save()
         return user
+
 
 class LoginUserSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
@@ -29,4 +31,3 @@ class LoginUserSerializer(serializers.Serializer):
             raise serializers.ValidationError('Invalid username or password')
         attrs['user']= user
         return attrs
-
